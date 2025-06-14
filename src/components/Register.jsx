@@ -7,15 +7,27 @@ const Register = () => {
       register,
       handleSubmit, 
       watch,
-       formState: { errors } 
+       formState: { errors , isSubmitting } 
       } = useForm();
-      
-      const onSubmit = (registerdata) => {
+
+
+     const delay = (time) => {
+      return new Promise((res , rej) => {
+        setTimeout(() => {
+          res()
+        }, time * 1000);
+      })
+     }     
+
+      const onSubmit = async (registerdata) => {
+        await delay(3)
         return console.log(registerdata)
       }
 
+
   return (
     <div>
+      {isSubmitting && <div> creating a new account... </div>}
         <form onSubmit={handleSubmit(onSubmit)}>
             <input placeholder="username "type="text" {...register("username" , {
                required :{value:true , message:"* username is required"},
@@ -36,7 +48,7 @@ const Register = () => {
             <br />
             {errors.email && <div>{errors.email.message}</div>}
             <br />
-            <input type="submit" value="create account" />
+            <input disabled={isSubmitting} type="submit" value="create account" />
         </form>
     </div>
   )
