@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
 
 const Register = () => {
+
+  const [formresult , setFormresult] = useState(null)
 
   const {
       register,
@@ -10,7 +12,7 @@ const Register = () => {
        formState: { errors , isSubmitting } 
       } = useForm();
 
-
+/*
      const delay = (time) => {
       return new Promise((res , rej) => {
         setTimeout(() => {
@@ -18,10 +20,32 @@ const Register = () => {
         }, time * 1000);
       })
      }     
-
+*/
       const onSubmit = async (registerdata) => {
-        await delay(3)
-        return console.log(registerdata)
+        //await delay(3) //used to simpulate API  or  network delay .
+        console.log(registerdata)
+
+        try {
+          const response = await fetch('http://localhost:8080/api/newuser' ,{
+          method: 'POST' ,
+          headers: {"Content-Type" : "application/json"},
+          body: JSON.stringify(registerdata)
+        })
+
+        const result = await response.json()
+        console.log("result : " , result)
+        console.log("response : " , response)
+
+        if (!response.ok){
+          setFormresult(result.message || 'Registration failed')
+        }else{
+          setFormresult('user registered successfully')
+        }
+        } catch (error) {
+          window.alert(error)
+        }
+        
+      
       }
 
 
@@ -32,8 +56,9 @@ const Register = () => {
             <input placeholder="username "type="text" {...register("username" , {
                required :{value:true , message:"* username is required"},
                minLength:{value:5 , message: "username must be atleast 5 characters"} ,
-               maxLength :{value:10 , message: "username must not exceed 10 characters"} 
-            })} />
+               maxLength :{value:15 , message: "username must not exceed 10 characters"} 
+            }
+            )} />
             <br />
             {errors.username && <div>{errors.username.message}</div>}
             <br />
@@ -50,6 +75,7 @@ const Register = () => {
             <br />
             <input disabled={isSubmitting} type="submit" value="create account" />
         </form>
+        {setFormresult && <div> {formresult} </div>}
     </div>
   )
 }
