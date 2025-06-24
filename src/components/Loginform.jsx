@@ -4,7 +4,8 @@ import { useState } from 'react';
 import {Link ,  Navigate,  Outlet,  useNavigate } from 'react-router-dom';
 
 
-const Loginform = () => {
+const Loginform = (props) => {
+  const {setIsauth , isauth } = props
 
   const navigate = useNavigate();
   const [loginstate , setLoginstate] = useState(null);
@@ -45,6 +46,7 @@ const onSubmit = async (data) => {
     }else{
       setLoginstate(result.message || "login successful")
       setLoginuserdetails(result.user)
+      setIsauth(true);
       navigate('/loggedin')
     }
 

@@ -1,10 +1,11 @@
 import { Outlet } from "react-router-dom"
 import Navbar from "../Pages/Navbar"
 
-const RootLayout = () => {
+const RootLayout = (props) => {
+  const {isauth} = props;
   return (
     <>
-    <Navbar />
+    <Navbar isauth={isauth} />
     <div className="page-container"><Outlet /></div>
     
     </>
