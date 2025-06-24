@@ -6,7 +6,6 @@ const Notfound = () => {
    return (
     <>
     <h1> 404 | page not found</h1>
-    <button className="btn" onClick={() => navigate('/')}> home</button>
     </>
   )
 }

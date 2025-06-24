@@ -8,6 +8,8 @@ import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } 
 import Login from './Pages/Login'
 import Loginform from './components/Loginform'
 import Register from './components/Register'
+import Forgotpass from './components/Forgotpass'
+import Loggedin from './components/Loggedin'
 
 function App() {
 
@@ -19,9 +21,14 @@ function App() {
         <Route path="contact" element={<Contact />} >
             <Route path="details" element={<Details />} /> 
         </Route>
+        <Route path="loggedin" element ={<Loggedin />} />
         <Route path="login" element={<Login />} >
             <Route path="user" element={<Loginform />} />
+            
+           
             <Route path="newuser" element={<Register />} />
+            <Route path="forgotpassword" element ={<Forgotpass />} />
+            
         </Route>
         <Route path="*" element={<Notfound />} />
       </Route>

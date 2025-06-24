@@ -74,8 +74,9 @@ const Register = () => {
             {errors.email && <div>{errors.email.message}</div>}
             <br />
             <input disabled={isSubmitting} type="submit" value="create account" />
+            
         </form>
-        {setFormresult && <div> {formresult} </div>}
+        {formresult && <div> <br /><hr />  <br /> {formresult} </div>}
     </div>
   )
 }
