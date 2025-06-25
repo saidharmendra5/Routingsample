@@ -62,7 +62,7 @@ const onSubmit = async (data) => {
   return (
     <div className='form-container'>
       
-      {isSubmitting && <div className="loader-overlay"> <img src={loadingimg} /></div>}
+      {isSubmitting && <div className="loader-overlay"> <div class="spinner"></div></div>}
 
         <form onSubmit={handleSubmit(onSubmit)}>
             <input placeholder="username" {...register("username" , {required:{value: true , message: "* username is required"}})}type="text"  />  

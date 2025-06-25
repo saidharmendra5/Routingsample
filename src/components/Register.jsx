@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
-const Register = () => {
+const Register = (props) => {
+  const {setIsauth , isauth } = props
 
   const [formresult , setFormresult] = useState(null)
+  const navigate = useNavigate();
 
   const {
       register,
@@ -40,6 +43,9 @@ const Register = () => {
           setFormresult(result.message || 'Registration failed')
         }else{
           setFormresult('user registered successfully')
+          setIsauth(true);
+          navigate('/loggedin')
+
         }
         } catch (error) {
           window.alert(error)
@@ -51,7 +57,7 @@ const Register = () => {
 
   return (
     <div>
-      {isSubmitting && <div> creating a new account... </div>}
+      {isSubmitting && <div className="loader-overlay"> <div class="spinner"></div></div>}
         <form onSubmit={handleSubmit(onSubmit)}>
             <input placeholder="username "type="text" {...register("username" , {
                required :{value:true , message:"* username is required"},

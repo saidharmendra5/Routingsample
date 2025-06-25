@@ -19,7 +19,7 @@ function App() {
 
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route path="/" element={<RootLayout isauth={isauth}/>}>
+      <Route path="/" element={<RootLayout isauth={isauth} setIsauth={setIsauth}/>}>
         <Route index element={<Home />} />
         <Route path="about" element={<About />} />
         <Route path="contact" element={<Contact />} >
@@ -35,7 +35,7 @@ function App() {
             <Route path="user" element={<Loginform isauth={isauth} setIsauth={setIsauth}/>} />
             
            
-            <Route path="newuser" element={<Register />} />
+            <Route path="newuser" element={<Register isauth={isauth} setIsauth={setIsauth}/>} />
             <Route path="forgotpassword" element ={<Forgotpass />} />
             
         </Route>
