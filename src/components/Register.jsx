@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { IsAuthContext } from '../Context/Authcontext';
+import VerifyMail from './VerifyMail';
 
-const Register = (props) => {
-  const {setIsauth , isauth } = props
+const Register = () => {
+  const { usermail , setUsermail } = useContext(IsAuthContext);
 
   const [formresult , setFormresult] = useState(null)
   const navigate = useNavigate();
@@ -43,12 +45,13 @@ const Register = (props) => {
           setFormresult(result.message || 'Registration failed')
         }else{
           setFormresult('user registered successfully')
-          setIsauth(true);
-          navigate('/loggedin')
-
+          setUsermail(registerdata.email)
+          navigate('/verify');
+          
         }
         } catch (error) {
           window.alert(error)
+          setFormresult('network error | server down')
         }
         
       
@@ -57,7 +60,7 @@ const Register = (props) => {
 
   return (
     <div>
-      {isSubmitting && <div className="loader-overlay"> <div class="spinner"></div></div>}
+      {isSubmitting && <div className="loader-overlay"> <div className="spinner"></div></div>}
         <form onSubmit={handleSubmit(onSubmit)}>
             <input placeholder="username "type="text" {...register("username" , {
                required :{value:true , message:"* username is required"},

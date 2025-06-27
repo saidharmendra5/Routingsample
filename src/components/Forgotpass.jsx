@@ -47,7 +47,7 @@ const [forgotmessage , setForgotmessage]  = useState(null);
     <br />
     <h3> reset password : </h3>
     <br />
-    {isSubmitting && <div>Loading...</div>}
+    {isSubmitting && <div className="loader-overlay"> <div className="spinner"></div></div>}
     <form onSubmit={handleSubmit(onSubmit)}>
     <input type="email" placeholder='e-mail' {...register("email" ,{
       required:{value:true , message:"* e-mail is required"}

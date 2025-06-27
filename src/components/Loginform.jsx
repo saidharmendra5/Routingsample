@@ -1,15 +1,17 @@
 import { useForm } from 'react-hook-form'
 import loadingimg from '../assets/formloading.gif'
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import {Link ,  Navigate,  Outlet,  useNavigate } from 'react-router-dom';
+import { IsAuthContext } from '../Context/Authcontext';
 
 
-const Loginform = (props) => {
-  const {setIsauth , isauth } = props
+const Loginform = () => {
+  const {setIsauth , isauth , username , setUsername ,usermail  , setUsermail} = useContext(IsAuthContext)
+  
 
   const navigate = useNavigate();
   const [loginstate , setLoginstate] = useState(null);
-  const [loginuserdetails , setLoginuserdetails] = useState(null)
+  
 
    const {
      register,
@@ -45,14 +47,24 @@ const onSubmit = async (data) => {
       setLoginstate(result.message || "login failed")
     }else{
       setLoginstate(result.message || "login successful")
-      setLoginuserdetails(result.user)
-      setIsauth(true);
-      navigate('/loggedin')
+      console.log(response);
+      console.log(result);
+      if( result.verified ){
+        setIsauth(true);
+        setUsermail(result.email);
+        setUsername(data.username);
+        navigate('/loggedin')
+        
+      }else{
+        setUsermail(result.email);
+        setUsername(data.username);
+        navigate('/verify');
+      }
     }
 
      } catch (error) {
       window.alert(error);
-      setLoginstate("network error | server down.")
+      setLoginstate("network error | server down")
      }
 
    
@@ -62,7 +74,7 @@ const onSubmit = async (data) => {
   return (
     <div className='form-container'>
       
-      {isSubmitting && <div className="loader-overlay"> <div class="spinner"></div></div>}
+      {isSubmitting && <div className="loader-overlay"> <div className="spinner"></div></div>}
 
         <form onSubmit={handleSubmit(onSubmit)}>
             <input placeholder="username" {...register("username" , {required:{value: true , message: "* username is required"}})}type="text"  />  
@@ -78,7 +90,7 @@ const onSubmit = async (data) => {
       
         </form>
         {loginstate &&  <div><br/><hr /><br />{loginstate}</div>}
-        {loginuserdetails && <div><br /><hr /><br />user email : {loginuserdetails.email}</div>}
+        
         
         
     </div>

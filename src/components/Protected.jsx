@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Navigate } from 'react-router-dom'
+import {  IsAuthContext } from '../Context/Authcontext';
 
 
-const Protected = ({isauth , children}) => {
-    
+const Protected = ({ children}) => {
+    const {isauth} = useContext(IsAuthContext)
 
     if(isauth){
         return children;
